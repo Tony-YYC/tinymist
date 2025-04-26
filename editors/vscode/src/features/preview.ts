@@ -353,9 +353,13 @@ export async function openPreviewInWebView({
   );
   html = html.replace("preview-arg:previewMode:Doc", `preview-arg:previewMode:${previewMode}`);
   html = html.replace("preview-arg:state:", `preview-arg:state:${previewStateEncoded}`);
+  let wsURI = await vscode.env.asExternalUri(
+    vscode.Uri.parse(translateExternalURL(`http://127.0.0.1:${dataPlanePort}`)),
+  );
+  
   html = html.replace(
     "ws://127.0.0.1:23625",
-    translateExternalURL(`ws://127.0.0.1:${dataPlanePort}`),
+    wsURI
   );
 
   // Sets the HTML content to the webview panel.
